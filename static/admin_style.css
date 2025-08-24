@@ -1,0 +1,36 @@
+.form-container { 
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 810px;
+    padding: 40px;
+    border-radius: 20px;
+    /* max-width: 500px;  */
+    margin: auto; 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px rgb(81, 81, 81);
+    font-size: 1.2rem;
+    color: rgb(200, 212, 253); 
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+body {
+    background-image: url(car_user2.png);
+    background-size: cover;
+}
+
+h2 {
+    color: rgb(200, 212, 253);
+}
+
+select, input, textarea { 
+    width: 100%; padding: 8px; margin: 10px 0; 
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    border-width: 3px;
+    opacity: 75%;
+}

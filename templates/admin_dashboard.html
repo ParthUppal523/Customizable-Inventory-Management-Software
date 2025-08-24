@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .tabs { margin-bottom: 20px; }
+        .tab-button { padding: 10px 20px; margin-right: 5px; text-decoration: none; color: rgb(200, 212, 253); border: 1px solid #ccc; border-radius: 10px;}
+        .active-tab { background-color: #4CAF50; color: white; border-radius: 10px;}
+        .form-container { max-width: 600px; margin: auto; }
+        input, select { width: 100%; padding: 8px; margin: 5px 0; }
+        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 10px; }
+        button:hover { background-color: #45a049; border-radius: 10px;}
+        .flash { margin: 10px auto; width: 600px; padding: 10px; border-radius: 5px; }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.danger { background-color: #f8d7da; color: #721c24; }
+        .flash.warning { background-color: #fff3cd; color: #856404; }
+        .flash.info { background-color: #cce5ff; color: #004085; }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_style.css') }}">
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <a href="{{ url_for('admin_dashboard', tab='purchase') }}" class="tab-button {% if active_tab == 'purchase' %}active-tab{% endif %}">Purchase</a>
+        <a href="{{ url_for('admin_dashboard', tab='check_stock') }}" class="tab-button {% if active_tab == 'check_stock' %}active-tab{% endif %}">Check Stock</a>
+        <a href="{{ url_for('admin_dashboard', tab='update_stock') }}" class="tab-button {% if active_tab == 'update_stock' %}active-tab{% endif %}">Update Stock</a>
+        <a href="{{ url_for('logout') }}" style="float:right;" class="tab-button">Logout</a>
+    </div>
+
+    <!-- Purchase Form -->
+    {% if active_tab == 'purchase' %}
+    <div class="form-container">
+        <form method="POST", action="{{ url_for('admin_dashboard', tab='purchase') }}">
+            <label>Customer Name:</label>
+            <input type="text" name="customer_name" value="{{ customer_name }}" required>
+
+            <!-- Make -->
+            <label for="make">Select Make:</label>
+            <select name="make" onchange="this.form.submit()">
+                <option value="">--Select Make--</option>
+                {% for make in makes %}
+                    <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Model -->
+            {% if selected_make %}
+                <label for="model">Select Model:</label>
+                <select name="model" onchange="this.form.submit()">
+                    <option value="">--Select Model--</option>
+                    {% for model in models %}
+                        <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Variant -->
+            {% if selected_model %}
+                <label for="variant">Select Variant:</label>
+                <select name="variant" onchange="this.form.submit()">
+                    <option value="">--Select Variant--</option>
+                    {% for variant in variants %}
+                        <option value="{{ variant }}" {% if variant == selected_variant %}selected{% endif %}>{{ variant }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Part -->
+            {% if selected_variant %}
+                <label for="part">Select Part:</label>
+                <select name="part" onchange="this.form.submit()">
+                    <option value="">--Select Part--</option>
+                    {% for part in parts %}
+                        <option value="{{ part }}" {% if part == selected_part %}selected{% endif %}>{{ part }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Model Year + Price + Quantity + Billing -->
+            {% if selected_part %}
+                <label for="modelyear">Enter Model Year:</label>
+                <input type="text" name="modelyear" value="{{ modelyear or '' }}" placeholder="e.g., 2022">
+
+                {% if unit_price %}
+                    <p>Unit Price: ₹{{ unit_price }}</p>
+                {% endif %}
+
+                <label for="quantity">Enter Quantity:</label>
+                <input type="number" name="quantity" value="{{ quantity or '' }}" placeholder="Quantity">
+
+                <label for="address">Billing Address:</label>
+                <textarea name="address" rows="3" placeholder="Enter billing address">{{ billing_address or '' }}</textarea>
+
+                {% if total %}
+                    <p><strong>Total (incl. GST 18%): ₹{{ total }}</strong></p>
+                {% endif %}
+
+                <button type="submit">Place Order</button>
+            {% endif %}
+        </form>
+    {% endif %}
+
+    <!-- Check Stock -->
+    {% if active_tab == 'check_stock' %}
+    <div class="form-container">
+        <h2>Check Stock Availability</h2>
+        <form method="POST" action="{{ url_for('admin_dashboard', tab='check_stock') }}">
+            <!-- Make -->
+            <label for="make">Select Make:</label>
+            <select name="make" onchange="this.form.submit()">
+                <option value="">--Select Make--</option>
+                {% for make in makes %}
+                    <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Model -->
+            {% if selected_make %}
+                <label for="model">Select Model:</label>
+                <select name="model" onchange="this.form.submit()">
+                    <option value="">--Select Model--</option>
+                    {% for model in models %}
+                        <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Variant -->
+            {% if selected_model %}
+                <label for="variant">Select Variant:</label>
+                <select name="variant" onchange="this.form.submit()">
+                    <option value="">--Select Variant--</option>
+                    {% for variant in variants %}
+                        <option value="{{ variant }}" {% if variant == selected_variant %}selected{% endif %}>{{ variant }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Part -->
+            {% if selected_variant %}
+                <label for="part">Select Part:</label>
+                <select name="part" onchange="this.form.submit()">
+                    <option value="">--Select Part--</option>
+                    {% for part in parts %}
+                        <option value="{{ part }}" {% if part == selected_part %}selected{% endif %}>{{ part }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </form>
+        {% if selected_part %}
+            <div style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; background-color: transparent; border-radius: 10px;">
+                <h3>Stock Details for <strong>{{ selected_part }}</strong>:</h3>
+                <p><strong>Available Quantity:</strong> {{ available_qty }}</p>
+                <p><strong>Unit Price:</strong> ₹{{ unit_price }}</p>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Update Stock -->
+    {% if active_tab == 'update_stock' %}
+    <div class="form-container">
+        <h2>Update Stock</h2>
+
+        <form method="POST" action="{{ url_for('admin_dashboard', tab='update_stock') }}">
+            <label>Operation:</label>
+            <select name="operation" onchange="this.form.submit()">
+                <option value="">--Select Operation--</option>
+                <option value="add" {% if operation == 'add' %}selected{% endif %}>Add Part</option>
+                <option value="delete" {% if operation == 'delete' %}selected{% endif %}>Delete Part</option>
+                <option value="update_quantity" {% if operation == 'update_quantity' %}selected{% endif %}>Update Quantity</option>
+                <option value="update_price" {% if operation == 'update_price' %}selected{% endif %}>Update Price</option>
+            </select>
+
+            <!-- Add Part -->
+            {% if operation == 'add' %}
+                <label for="make">Select Make:</label>
+                <select name="make" onchange="this.form.submit()">
+                    <option value="">--Select Make--</option>
+                    {% for make in makes %}
+                        <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="model">Enter Model:</label>
+                <input type="text" name="model" value="{{ selected_model or '' }}">
+
+                <label for="variant">Enter Variant:</label>
+                <input type="text" name="variant" value="{{ selected_variant or '' }}">
+
+                <label for="part">Enter Part Name:</label>
+                <input type="text" name="part" value="{{ selected_part or '' }}">
+
+                <label for="quantity">Enter Quantity:</label>
+                <input type="number" name="quantity" value="{{ quantity or '' }}">
+
+                <label for="price">Enter Unit Price:</label>
+                <input type="number" name="price" value="{{ price or '' }}" step="0.01">
+
+                <button type="submit">Add Part</button>
+            {% endif %}
+            <!-- Delete Part -->
+            {% if operation == 'delete' %}
+                <label for="make">Select Make:</label>
+                <select name="make" onchange="this.form.submit()">
+                    <option value="">--Select Make--</option>
+                    {% for make in makes %}
+                        <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="model">Enter Model:</label>
+                <input type="text" name="model" value="{{ selected_model or '' }}">
+
+                <label for="variant">Enter Variant:</label>
+                <input type="text" name="variant" value="{{ selected_variant or '' }}">
+
+                <label for="part">Enter Part Name:</label>
+                <input type="text" name="part" value="{{ selected_part or '' }}">
+
+                <button type="submit">Delete Part</button>
+            {% endif %}
+
+
+            <!-- Update Quantity / Price -->
+            {% if operation in ['update_quantity', 'update_price'] %}
+                <label for="make">Select Make:</label>
+                <select name="make" onchange="this.form.submit()">
+                    <option value="">--Select Make--</option>
+                    {% for make in makes %}
+                        <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if selected_make %}
+                    <label for="model">Select Model:</label>
+                    <select name="model" onchange="this.form.submit()">
+                        <option value="">--Select Model--</option>
+                        {% for model in models %}
+                            <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if selected_model %}
+                    <label for="variant">Select Variant:</label>
+                    <select name="variant" onchange="this.form.submit()">
+                        <option value="">--Select Variant--</option>
+                        {% for variant in variants %}
+                            <option value="{{ variant }}" {% if variant == selected_variant %}selected{% endif %}>{{ variant }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if selected_variant %}
+                    <label for="part">Select Part:</label>
+                    <select name="part" onchange="this.form.submit()">
+                        <option value="">--Select Part--</option>
+                        {% for part in parts %}
+                            <option value="{{ part }}" {% if part == selected_part %}selected{% endif %}>{{ part }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if selected_part %}
+                    {% if operation == 'update_quantity' and current_quantity is not none %}
+                        <p><strong>Current Quantity:</strong> {{ current_quantity }}</p>
+                    {% elif operation == 'update_price' and current_price is not none %}
+                        <p><strong>Current Price:</strong> ₹{{ current_price }}</p>
+                    {% endif %}
+
+                    {% if operation == 'update_quantity' %}
+                        <label for="quantity">Enter New Quantity:</label>
+                        <input type="number" name="quantity" value="{{ quantity or '' }}">
+                    {% elif operation == 'update_price' %}
+                        <label for="price">Enter New Unit Price:</label>
+                        <input type="number" name="price" value="{{ price or '' }}" step="0.01">
+                    {% endif %}
+
+                    <button type="submit">
+                        {% if operation == 'update_quantity' %}Update Quantity{% else %}Update Price{% endif %}
+                    </button>
+                {% endif %}
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
+
+</body>
+</html>

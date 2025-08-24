@@ -1,0 +1,81 @@
+body{
+    height: 100px;
+    width: 400px;
+fill-opacity: initial;
+background-image: url(car1.jpg);
+background-size: cover;
+}
+h1{
+    height: 75px;
+    font-size: 2.1em;
+    text-align: center;
+    font-family: Poppins;
+    font-weight:lighter;
+    text-transform: uppercase;
+}
+form{
+    font-size: 1.5em;
+    text-align: center;
+    font-weight:500;
+    font-family: Poppins;
+}
+#abc{
+    padding: 40px;   
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to top,#060506,#E9E4F0);
+    border-radius: 20px;
+    /* box-shadow: 2px 2px 10px; */
+    width:800px;
+    margin-right: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px rgb(81, 81, 81);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 1.2rem;
+    color: black; 
+}
+#qwerty{
+    font-size: 1.1em;
+    text-align: left;
+}
+#but{
+    width: 250px;
+    height: 50px;
+    border-width: 3px;
+    color: rgba(194, 192, 192, 0.814);
+    font-size: 1em;
+    border-radius: 50px;
+    font-weight: bold;
+    font-family: Poppins;
+    cursor: pointer;
+    /* background-image:linear-gradient(to right,rgb(211, 190, 209),rgb(234, 194, 229)); */
+    background-color: transparent;
+}
+
+#inp{
+    font-size: 0.9em;
+    height: 40px;
+    width: 730px;
+    padding-left:20px;
+    border-top: 0cap;
+    border-left: 0cap;
+    border-right: 0cap;
+    border-bottom-color: rgb(0, 0, 0);
+    background-color: transparent;
+    border-radius: 0px;
+    border-bottom-color: #000000;
+    border-width: 3px;
+    font-family: Poppins;
+    opacity: 100%;
+    color: #000000;
+}
+#but:hover{
+    opacity: 90%;
+    background-image: radial-gradient(circle, black, rgb(86, 86, 86), rgb(222, 220, 220));
+}

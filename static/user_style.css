@@ -1,0 +1,50 @@
+body { 
+height: 1200px;
+
+    font-family: Arial, sans-serif; margin: 30px; 
+    background-image: url(car_user2.png);
+    background-size: contain;
+}
+.container { 
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 810px;
+    padding: 40px;
+    border-radius: 20px;
+    /* max-width: 500px;  */
+    margin: auto; 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 20px rgb(81, 81, 81);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    font-size: 1.2rem;
+    color: rgb(200, 212, 253); 
+
+}
+select, input, textarea { 
+    width: 100%; padding: 8px; margin: 10px 0; 
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    border-width: 3px;
+    opacity: 75%;
+}
+button { 
+    padding: 10px 20px; 
+    background-color: rgb(13, 13, 249);
+    color: white;
+    border-radius: 15px;
+    opacity: 75%;
+}
+.top-right { 
+    float: right; 
+}
+div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

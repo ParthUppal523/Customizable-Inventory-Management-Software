@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_style.css') }}">
+    
+</head>
+<body>
+    <div class="container">
+        <h2>ABC CORPORATION | Welcome, User <a href="{{ url_for('logout') }}" class="top-right">Logout</a></h2>
+
+        <form method="POST" action="{{ url_for('user_dashboard') }}">
+            <!-- Make -->
+            <label for="make">Select Make:</label>
+            <select name="make" onchange="this.form.submit()">
+                <option value="">--Select Make--</option>
+                {% for make in makes %}
+                    <option value="{{ make }}" {% if make == selected_make %}selected{% endif %}>{{ make }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Model -->
+            {% if selected_make %}
+                <label for="model">Select Model:</label>
+                <select name="model" onchange="this.form.submit()">
+                    <option value="">--Select Model--</option>
+                    {% for model in models %}
+                        <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Variant -->
+            {% if selected_model %}
+                <label for="variant">Select Variant:</label>
+                <select name="variant" onchange="this.form.submit()">
+                    <option value="">--Select Variant--</option>
+                    {% for variant in variants %}
+                        <option value="{{ variant }}" {% if variant == selected_variant %}selected{% endif %}>{{ variant }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Part -->
+            {% if selected_variant %}
+                <label for="part">Select Part:</label>
+                <select name="part" onchange="this.form.submit()">
+                    <option value="">--Select Part--</option>
+                    {% for part in parts %}
+                        <option value="{{ part }}" {% if part == selected_part %}selected{% endif %}>{{ part }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+
+            <!-- Model Year + Price + Quantity + Billing -->
+            {% if selected_part %}
+                <label for="modelyear">Enter Model Year:</label>
+                <input type="text" name="modelyear" value="{{ modelyear or '' }}" placeholder="e.g., 2022">
+
+                {% if unit_price %}
+                    <p>Unit Price: ₹{{ unit_price }}</p>
+                {% endif %}
+
+                <label for="quantity">Enter Quantity:</label>
+                <input type="number" name="quantity" value="{{ quantity or '' }}" placeholder="Quantity">
+
+                <label for="address">Billing Address:</label>
+                <textarea name="address" rows="3" placeholder="Enter billing address">{{ billing_address or '' }}</textarea>
+
+                {% if total %}
+                    <p><strong>Total (incl. GST 18%): ₹{{ total }}</strong></p>
+                {% endif %}
+
+                <button type="submit">Place Order</button>
+            {% endif %}
+        </form>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                {% for category, message in messages %}
+                    <li><strong>{{ message }}</strong></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

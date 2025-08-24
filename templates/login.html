@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Poppins&family=Lato&family=Montserrat&family=Raleway&family=Merriweather&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="abc">
+        <h1>Welcome to ABC Corporation</h1>
+        <hr style="height: 1.5px; background-color: black; border: none;">
+
+        <form method="POST" action="{{ url_for('login') }}"><br>
+            <label for="username"><div id="qwerty">Username:</div></label>
+            <input type="text" name="username" placeholder="Enter username" minlength="4" required id="inp"><br><br>
+
+            <label for="password"><div id="qwerty">Password:</div></label>
+            <input type="password" name="password" placeholder="Enter password" minlength="3" required id="inp" 
+            required pattern="^[A-Z][A-Za-z0-9@#$%^&+=*!]*[!@#$%^&*()_+=-]+.*"><br><br>
+
+            <input type="submit" value="Login" id="but">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
