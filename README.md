@@ -15,8 +15,10 @@ Thus, the software provides a convenient and hassle-free solution for its users
 <h3>Admin Dashboard Sample Screenshots: </h3>
 1. Purchase on behalf of customer:
    <img width="947" height="620" alt="image" src="https://github.com/user-attachments/assets/88a15871-2f58-4a77-a706-74067eb15b8f" />
+   
 2. Check Stock:
    <img width="940" height="615" alt="image" src="https://github.com/user-attachments/assets/de61eb92-6b91-4dd1-8374-157a617b4e7f" />
+   
 3. Update Stock:
    (a) Add part - 
    <img width="985" height="644" alt="image" src="https://github.com/user-attachments/assets/7174ff4c-2b21-4e29-b424-e752075a7fb4" />
