@@ -8,11 +8,11 @@ On the other hand, employees (OEM/Supplier) can login to the portal with their u
 This will save a lot of time for both, the customers and the OEM as it helps them to manage their order details and availability of stock at a single panel and almost instantly. This will also help OEMs to flourish their trade by efficient management of the saleable inventory.  
 Thus, the software provides a convenient and hassle-free solution for its users
 
-User Dashboard Sample Screenshots:
+<h3>User Dashboard Sample Screenshots: </h3>
 <img width="928" height="611" alt="image" src="https://github.com/user-attachments/assets/460b74cd-ae67-4ca1-97cb-e3088caac72b" />
 <img width="928" height="611" alt="image" src="https://github.com/user-attachments/assets/600087f8-e899-471d-9692-f60334fb2816" />
 
-Admin Dashboard Sample Screenshots:
+<h3>Admin Dashboard Sample Screenshots: </h3>
 1. Purchase on behalf of customer:
    <img width="947" height="620" alt="image" src="https://github.com/user-attachments/assets/88a15871-2f58-4a77-a706-74067eb15b8f" />
 2. Check Stock:
